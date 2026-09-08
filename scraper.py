@@ -1,7 +1,6 @@
 import asyncio
 import sys
 from playwright.async_api import async_playwright
-from playwright_stealth import stealth_async
 
 TARGET_URL = "https://www.cnnindonesia.com/tv/embed?smartautoplay=true"
 
@@ -14,22 +13,23 @@ async def main():
             args=[
                 "--no-sandbox",
                 "--disable-setuid-sandbox",
-                "--disable-blink-features=AutomationControlled", # Tắt cờ báo hiệu đang dùng tool tự động
+                "--disable-blink-features=AutomationControlled", # Ẩn danh bot
                 "--autoplay-policy=no-user-gesture-required"
             ]
         )
         context = await browser.new_context(
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-            viewport={"width": 1280, "height": 720}, # Giả lập kích thước màn hình thật
+            viewport={"width": 1280, "height": 720},
             extra_http_headers={
                 "Referer": "https://www.cnnindonesia.com/",
                 "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7"
             }
         )
-        page = await context.new_page()
+        
+        # Tiêm mã JavaScript tàng hình để vượt mặt các hệ thống chặn bot cơ bản
+        await context.add_init_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
-        # Kích hoạt chế độ tàng hình trước khi truy cập trang web
-        await stealth_async(page)
+        page = await context.new_page()
 
         def handle_request(request):
             if ".m3u8" in request.url:
@@ -41,12 +41,11 @@ async def main():
         page.on("request", handle_request)
 
         try:
-            # Dùng networkidle để đảm bảo trang tải xong hoàn toàn các script ẩn
             await page.goto(TARGET_URL, wait_until="networkidle", timeout=45000)
-            await page.mouse.click(640, 360) # Click giả lập thao tác người dùng
+            await page.mouse.click(640, 360) # Click giả lập
             await page.wait_for_timeout(8000)
         except Exception as e:
-            print(f"[LOG] Bỏ qua lỗi timeout hoặc tải trang: {e}")
+            print(f"[LOG] Bỏ qua lỗi: {e}")
         finally:
             await browser.close()
 
@@ -58,7 +57,7 @@ async def main():
         with open("cnn.m3u8", "w", encoding="utf-8") as f:
             f.write(f'#EXTM3U\n#EXTINF:-1 tvg-id="CNNIndonesia.id" tvg-name="CNN Indonesia",CNN Indonesia\n{link}\n')
             
-        print("[THÀNH CÔNG] Đã bắt được Token và lưu file.")
+        print(f"[THÀNH CÔNG] Lấy được Token: {link}")
     else:
         print("[LỖI] Bị chặn hoặc không tìm thấy m3u8!")
         sys.exit(1)
