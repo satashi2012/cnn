@@ -1,0 +1,12 @@
+{
+  "url": "https://live.cnnindonesia.com/livecnn-sec/smil:cnntv.smil/playlist.m3u8?wowzatokenstarttime=0&wowzatokenendtime=1788861409536&wowzatokenhash=MwMeVeU9MUA3M-ZoVDDe6DcBvFYRTJf9A_fQQ-jPhLs%3D",
+  "cookie_name": "cshx",
+  "cookie_value": "a7f2d91b",
+  "cookie_domain": ".cnnindonesia.com",
+  "expire_minutes": 15,
+  "start_time": "0",
+  "end_time": "1788861409536",
+  "hash_input": "livecnn-sec/smil:cnntv.smil?5da9533f4da8bd76&wowzatokenendtime=1788861409536&wowzatokenstarttime=0",
+  "hash_base64": "MwMeVeU9MUA3M+ZoVDDe6DcBvFYRTJf9A/fQQ+jPhLs=",
+  "hash_url_safe": "MwMeVeU9MUA3M-ZoVDDe6DcBvFYRTJf9A_fQQ-jPhLs="
+}
