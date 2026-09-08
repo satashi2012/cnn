@@ -1,0 +1,46 @@
+name: Generate CNN Token & Deploy
+
+on:
+  # Run every 13 minutes (token expires every 15 min)
+  schedule:
+    - cron: '*/13 * * * *'
+
+  # Manual trigger
+  workflow_dispatch:
+
+  # On push to main
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  generate-token:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Generate Wowza token
+        id: token
+        run: python generate_token.py
+
+      - name: Commit & push updated index.html
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html token_result.json
+          git diff --cached --quiet || git commit -m "🔑 Auto-update token $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
