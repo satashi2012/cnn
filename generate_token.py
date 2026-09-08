@@ -272,6 +272,34 @@ def fetch_latest_js_config():
         return False
 
 
+def fetch_dynamic_config():
+    """
+    Fetch the embed page and extract dynamic configurations like cshscValueIdx.
+    """
+    url = "https://www.cnnindonesia.com/tv/embed?smartautoplay=true"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+    }
+    
+    try:
+        print("[INFO] Fetching dynamic config from embed page...")
+        resp = requests.get(url, headers=headers, timeout=30)
+        resp.raise_for_status()
+        html_content = resp.text
+
+        # Extract cshscValueIdx
+        match = re.search(r'cshscValueIdx\s*:\s*(\d+)', html_content)
+        if match:
+            idx = int(match.group(1))
+            print(f"[OK] Found dynamic cshscValueIdx: {idx}")
+            return idx
+        else:
+            print("[WARN] cshscValueIdx not found in embed page, using default 1")
+            return 1
+    except Exception as e:
+        print(f"[WARN] Failed to fetch dynamic config: {e}")
+        return 1
+
 def main():
     """Main entry point - generates token and updates index.html."""
     print("=" * 60)
@@ -281,8 +309,8 @@ def main():
     # Try to fetch latest config from CDN
     fetch_latest_js_config()
 
-    # cshscValueIdx = 1 from the HTML config
-    cshsc_idx = 1
+    # Fetch dynamic cshscValueIdx from the embed page
+    cshsc_idx = fetch_dynamic_config()
 
     # Generate token
     result = generate_wowza_token(config=CONFIG, cshsc_value_idx=cshsc_idx)
@@ -324,3 +352,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
