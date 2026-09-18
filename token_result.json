@@ -1,12 +1,12 @@
 {
-  "url": "https://live.cnnindonesia.com/livecnn-sec/smil:cnntv.smil/playlist.m3u8?wowzatokenstarttime=0&wowzatokenendtime=1789696372031&wowzatokenhash=OBskgNKUxgKRJvpLTt8vVqhVYYpH94yimJocOARx8aw%3D",
+  "url": "https://live.cnnindonesia.com/livecnn-sec/smil:cnntv.smil/playlist.m3u8?wowzatokenstarttime=0&wowzatokenendtime=1789714554183&wowzatokenhash=FIhIZfb_wKi9pQxQ5FRPo1umF-_Y_4fgu9nmXT72hNs%3D",
   "cookie_name": "cshx",
   "cookie_value": "a7f2d91b",
   "cookie_domain": ".cnnindonesia.com",
   "expire_minutes": 15,
   "start_time": "0",
-  "end_time": "1789696372031",
-  "hash_input": "livecnn-sec/smil:cnntv.smil?5da9533f4da8bd76&wowzatokenendtime=1789696372031&wowzatokenstarttime=0",
-  "hash_base64": "OBskgNKUxgKRJvpLTt8vVqhVYYpH94yimJocOARx8aw=",
-  "hash_url_safe": "OBskgNKUxgKRJvpLTt8vVqhVYYpH94yimJocOARx8aw="
+  "end_time": "1789714554183",
+  "hash_input": "livecnn-sec/smil:cnntv.smil?5da9533f4da8bd76&wowzatokenendtime=1789714554183&wowzatokenstarttime=0",
+  "hash_base64": "FIhIZfb/wKi9pQxQ5FRPo1umF+/Y/4fgu9nmXT72hNs=",
+  "hash_url_safe": "FIhIZfb_wKi9pQxQ5FRPo1umF-_Y_4fgu9nmXT72hNs="
 }
